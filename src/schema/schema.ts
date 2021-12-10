@@ -46,6 +46,12 @@ const ProductType: GraphQLObjectType = new GraphQLObjectType({
 		description: { type: GraphQLString },
 		price: { type: GraphQLInt },
 		storeId: { type: GraphQLID },
+		store: {
+			type: StoreType,
+			resolve: (parent, args) => {
+				return _.find(Stores, { _id: parent.storeId });
+			},
+		},
 	}),
 });
 
@@ -55,6 +61,12 @@ const StoreType: GraphQLObjectType = new GraphQLObjectType({
 		_id: { type: GraphQLID },
 		name: { type: GraphQLString },
 		address: { type: GraphQLString },
+		products: {
+			type: new GraphQLList(ProductType),
+			resolve: (parent, args) => {
+				return _.filter(Products, { storeId: parent._id });
+			},
+		},
 	}),
 });
 
