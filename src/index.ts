@@ -7,6 +7,8 @@ import schema from './schema/schema';
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.use(
 	'/graphql',
 	graphqlHTTP({
@@ -16,7 +18,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-	res.send('hello');
+	res.send(process.env.BASE_URL);
 });
 
 dotenv.config();
