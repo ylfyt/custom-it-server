@@ -1,4 +1,4 @@
-import { GraphQLID, GraphQLInt, GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql';
+import { GraphQLID, GraphQLInt, GraphQLList, GraphQLObjectType, GraphQLSchema, GraphQLString } from 'graphql';
 import _ from 'lodash';
 
 const Products = [
@@ -25,6 +25,19 @@ const Products = [
 	},
 ];
 
+const Stores = [
+	{
+		_id: '1',
+		name: 'Toko Jaya Makmur',
+		address: 'Jalan makmur nomor 3',
+	},
+	{
+		_id: '3',
+		name: 'Toko budi selalu',
+		address: 'Jalan soekarno hatta',
+	},
+];
+
 const ProductType: GraphQLObjectType = new GraphQLObjectType({
 	name: 'Product',
 	fields: () => ({
@@ -36,6 +49,15 @@ const ProductType: GraphQLObjectType = new GraphQLObjectType({
 	}),
 });
 
+const StoreType: GraphQLObjectType = new GraphQLObjectType({
+	name: 'Store',
+	fields: () => ({
+		_id: { type: GraphQLID },
+		name: { type: GraphQLString },
+		address: { type: GraphQLString },
+	}),
+});
+
 const RootQuery: GraphQLObjectType = new GraphQLObjectType({
 	name: 'RootQuery',
 	fields: {
@@ -44,6 +66,25 @@ const RootQuery: GraphQLObjectType = new GraphQLObjectType({
 			args: { _id: { type: GraphQLID } },
 			resolve: (parent, args) => {
 				return _.find(Products, { _id: args._id });
+			},
+		},
+		store: {
+			type: StoreType,
+			args: { _id: { type: GraphQLID } },
+			resolve: (parent, args) => {
+				return _.find(Stores, { _id: args._id });
+			},
+		},
+		products: {
+			type: new GraphQLList(ProductType),
+			resolve: (parent, args) => {
+				return Products;
+			},
+		},
+		stores: {
+			type: new GraphQLList(StoreType),
+			resolve: (parent, args) => {
+				return Stores;
 			},
 		},
 	},
