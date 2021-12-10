@@ -46,6 +46,7 @@ const ProductType: GraphQLObjectType = new GraphQLObjectType({
 		description: { type: GraphQLString },
 		price: { type: GraphQLInt },
 		storeId: { type: GraphQLID },
+		image: { type: GraphQLString },
 		store: {
 			type: StoreType,
 			resolve: (parent, args) => {
@@ -102,6 +103,27 @@ const RootQuery: GraphQLObjectType = new GraphQLObjectType({
 	},
 });
 
+const Mutation: GraphQLObjectType = new GraphQLObjectType({
+	name: 'Mutation',
+	fields: {
+		addProduct: {
+			type: ProductType,
+			args: {
+				_id: { type: GraphQLID },
+				name: { type: GraphQLString },
+				description: { type: GraphQLString },
+				price: { type: GraphQLInt },
+				storeId: { type: GraphQLID },
+			},
+			resolve: (parent, args) => {
+				console.log(args);
+				return 'dsad';
+			},
+		},
+	},
+});
+
 export default new GraphQLSchema({
 	query: RootQuery,
+	mutation: Mutation,
 });
