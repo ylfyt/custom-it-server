@@ -18,7 +18,7 @@ app.use(
 );
 
 app.get('/', (req, res) => {
-	res.send(process.env.BASE_URL);
+	res.send('Hello');
 });
 
 dotenv.config();
@@ -27,7 +27,8 @@ const DB_CONNECT = process.env.DB_CONNECT!;
 
 mongoose.connect(DB_CONNECT, () => {
 	console.log('Database is connected ...');
-	app.listen(PORT, () => {
-		console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
-	});
+});
+
+app.listen(PORT, () => {
+	console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
 });
