@@ -2,33 +2,47 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { graphqlHTTP } from 'express-graphql';
 import mongoose from 'mongoose';
+import { MikroORM } from '@mikro-orm/core';
 
 import schema from './schema/schema';
+import { Product } from './entities/Product';
+import { Store } from './entities/Store';
 
-const app = express();
+// app.use(express.static('public'));
 
-app.use(express.static('public'));
+// app.use(
+// 	'/graphql',
+// 	graphqlHTTP({
+// 		schema: schema,
+// 		graphiql: true,
+// 	})
+// );
 
-app.use(
-	'/graphql',
-	graphqlHTTP({
-		schema: schema,
-		graphiql: true,
-	})
-);
+// mongoose.connect(DB_CONNECT, () => {
+// 	console.log('Database is connected ...');
+// });
 
-app.get('/', (req, res) => {
-	res.send('Hello');
-});
+const main = async () => {
+	const orm = await MikroORM.init({
+		entities: [Product, Store],
+		dbName: 'custom-it',
+		type: 'mongo',
+		clientUrl: 'mongodb://localhost:27017',
+		debug: false,
+	});
 
-dotenv.config();
-const PORT = process.env.PORT || 4000;
-const DB_CONNECT = process.env.DB_CONNECT!;
+	const app = express();
 
-mongoose.connect(DB_CONNECT, () => {
-	console.log('Database is connected ...');
-});
+	app.get('/', (req, res) => {
+		res.send('Hello');
+	});
 
-app.listen(PORT, () => {
-	console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
-});
+	dotenv.config();
+	const PORT = process.env.PORT || 4000;
+
+	app.listen(PORT, () => {
+		console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
+	});
+};
+
+main();
