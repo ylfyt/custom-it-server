@@ -1,5 +1,5 @@
-import { Entity, PrimaryKey, SerializedPrimaryKey, Property, OneToMany, ManyToMany, ManyToOne } from '@mikro-orm/core';
-import { ObjectId, Collection } from 'mongoose';
+import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
+import { ObjectId } from 'mongoose';
 
 @Entity()
 export class Store {
@@ -9,12 +9,18 @@ export class Store {
 	@SerializedPrimaryKey()
 	id!: string;
 
-	@Property()
+	@Property({ type: String })
 	name!: string;
 
-	@Property()
+	@Property({ unique: true })
 	username!: string;
 
-	@Property()
+	@Property({ nullable: false })
 	address!: string;
+
+	constructor(name: string, username: string, address: string) {
+		this.name = name;
+		this.username = username;
+		this.address = address;
+	}
 }

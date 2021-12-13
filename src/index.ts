@@ -34,7 +34,7 @@ const main = async () => {
 	const app = express();
 
 	app.get('/', (req, res) => {
-		res.send('Hello');
+		res.send('Hello ');
 	});
 
 	dotenv.config();
@@ -43,6 +43,10 @@ const main = async () => {
 	app.listen(PORT, () => {
 		console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
 	});
+
+	// const store = new Store('Yudi', 'yudi', 'mungo');
+	const store = orm.em.create(Store, { name: 'Yudi', username: 'yudi', address: 'Mungo' });
+	await orm.em.persistAndFlush(store);
 };
 
 main();
