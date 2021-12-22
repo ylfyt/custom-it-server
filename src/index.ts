@@ -2,46 +2,54 @@ import 'reflect-metadata';
 import express from 'express';
 import dotenv from 'dotenv';
 import { createConnection } from 'typeorm';
-import { graphqlHTTP } from 'express-graphql';
+import { ApolloServer } from 'apollo-server-express';
 
+import { buildSchema, ID } from 'type-graphql';
+import { StoreResolver } from './resolver/store.resolver';
 import { Store } from './entities/Store';
-import { Product } from './entities/Product';
 
-const app = express();
+const main = async () => {
+	const app = express();
+	dotenv.config();
+	const PORT = process.env.PORT || 4000;
 
-// app.use(express.static('public'));
-
-// app.use(
-// 	'/graphql',
-// 	graphqlHTTP({
-// 		schema: schema,
-// 		graphiql: true,
-// 	})
-// );
-
-dotenv.config();
-const PORT = process.env.PORT || 4000;
-
-app.get('/', (req, res) => {
-	res.send('Hello ');
-});
-
-createConnection({
-	type: 'mongodb',
-	url: process.env.DB_CONNECT,
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-	synchronize: true,
-	logging: true,
-	entities: ['dist/entities/*.{ts,js}'],
-})
-	.then(async (connection) => {
-		console.log('Mongodb is connected');
-
-		app.listen(PORT, () => {
-			console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
-		});
-	})
-	.catch((error) => {
-		console.log(error.message);
+	app.get('/', (req, res) => {
+		res.send('Hello ');
 	});
+
+	const schema = await buildSchema({
+		resolvers: [StoreResolver],
+	});
+
+	const apolloServer = new ApolloServer({
+		schema: schema,
+	});
+
+	await apolloServer.start();
+	apolloServer.applyMiddleware({ app });
+
+	createConnection({
+		type: 'mongodb',
+		url: process.env.DB_CONNECT,
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		synchronize: true,
+		logging: true,
+		entities: ['dist/entities/*.{ts,js}'],
+	})
+		.then(async (connection) => {
+			console.log('Mongodb is connected');
+
+			app.listen(PORT, () => {
+				console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
+			});
+
+			const str = await connection.manager.findOne(Store, { id: '61b36e3ff59c45a4aa9f2fa4' });
+			console.log(str);
+		})
+		.catch((error) => {
+			console.log(error.message);
+		});
+};
+
+main();
