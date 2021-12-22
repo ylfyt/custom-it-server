@@ -1,38 +1,25 @@
-// import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
-// import { ObjectId } from 'mongoose';
+import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
 
-// @Entity()
-// export class Product {
-// 	@PrimaryKey()
-// 	_id!: ObjectId;
+@Entity()
+export class Product {
+	@ObjectIdColumn()
+	id!: ObjectID;
 
-// 	@SerializedPrimaryKey()
-// 	id!: string;
+	@Column()
+	name!: string;
 
-// 	@Property()
-// 	name!: string;
+	@Column()
+	description!: string;
 
-// 	@Property()
-// 	description!: string;
+	@Column()
+	price!: number;
 
-// 	@Property()
-// 	price!: number;
+	@Column()
+	stock!: number;
 
-// 	@Property()
-// 	stock!: number;
+	@Column()
+	storeId!: string;
 
-// 	@Property()
-// 	storeId!: string;
-
-// 	@Property()
-// 	image!: string;
-
-// 	constructor(name: string, description: string, price: number, stock: number, storeId: string, image: string) {
-// 		this.name = name;
-// 		this.description = description;
-// 		this.price = price;
-// 		this.stock = stock;
-// 		this.storeId = storeId;
-// 		this.image = image;
-// 	}
-// }
+	@Column()
+	image!: string;
+}

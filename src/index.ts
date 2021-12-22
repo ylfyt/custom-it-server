@@ -1,10 +1,11 @@
+import 'reflect-metadata';
 import express from 'express';
 import dotenv from 'dotenv';
+import { createConnection } from 'typeorm';
 import { graphqlHTTP } from 'express-graphql';
 
-import { createConnection } from 'typeorm';
 import { Store } from './entities/Store';
-import 'reflect-metadata';
+import { Product } from './entities/Product';
 
 const app = express();
 
