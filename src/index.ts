@@ -1,12 +1,13 @@
 import 'reflect-metadata';
 import express from 'express';
 import dotenv from 'dotenv';
-import { createConnection } from 'typeorm';
+import { createConnection, getMongoRepository } from 'typeorm';
 import { ApolloServer } from 'apollo-server-express';
 
 import { buildSchema, ID } from 'type-graphql';
 import { StoreResolver } from './resolver/store.resolver';
 import { Store } from './entities/Store';
+import { ObjectID } from 'mongodb';
 
 const main = async () => {
 	const app = express();
@@ -44,7 +45,7 @@ const main = async () => {
 				console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
 			});
 
-			const str = await connection.manager.findOne(Store, { id: '61b36e3ff59c45a4aa9f2fa4' });
+			const str = await getMongoRepository(Store).findOne({ _id: new ObjectID('61b36e3ff59c45a4aa9f2fa4') });
 			console.log(str);
 		})
 		.catch((error) => {

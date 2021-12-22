@@ -1,9 +1,9 @@
-import { GraphQLSchema } from 'graphql';
+// import { GraphQLSchema } from 'graphql';
 
-import { RootQuery } from './RootQueryType';
-import { Mutation } from './MutationType';
+// import { RootQuery } from './RootQueryType';
+// import { Mutation } from './MutationType';
 
-export default new GraphQLSchema({
-	query: RootQuery,
-	mutation: Mutation,
-});
+// export default new GraphQLSchema({
+// 	query: RootQuery,
+// 	mutation: Mutation,
+// });
