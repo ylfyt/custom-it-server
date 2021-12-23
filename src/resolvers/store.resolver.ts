@@ -1,25 +1,15 @@
-import { Arg, Ctx, FieldResolver, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Query, Resolver } from 'type-graphql';
 import { Store } from '../entities/Store';
 import { MyContext } from '../types';
 
 @Resolver(Store)
 export class StoreResolver {
-	//   @Query(returns => Recipe)
-	//   async recipe(@Arg("id") id: string) {
-	//     const recipe = await this.recipeService.findById(id);
-	//     if (recipe === undefined) {
-	//       throw new RecipeNotFoundError(id);
-	//     }
-	//     return recipe;
-	//   }
 	@Query(() => [Store])
 	async stores(@Ctx() { em }: MyContext) {
-		// return await getMongoRepository(Store).find();
 		return await em.find(Store, {});
 	}
-	// @Query(() => Store, { nullable: true })
-	// async store(@Arg('id') id: string) {
-	// 	console.log(id);
-	// 	return await getManager().findOne(Store, { id: id });
-	// }
+	@Query(() => Store, { nullable: true })
+	async store(@Ctx() { em }: MyContext, @Arg('id') id: string) {
+		return await em.findOne(Store, { id: id });
+	}
 }

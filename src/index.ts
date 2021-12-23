@@ -1,13 +1,13 @@
-import 'reflect-metadata';
 import express from 'express';
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server-express';
 import { MikroORM } from '@mikro-orm/core';
+import { buildSchema } from 'type-graphql';
 
-import { buildSchema, ID } from 'type-graphql';
 import { StoreResolver } from './resolvers/store.resolver';
 import { Store } from './entities/Store';
 import { Product } from './entities/Product';
+import { ProductResolver } from './resolvers/product.resolver';
 
 const main = async () => {
 	const app = express();
@@ -28,7 +28,7 @@ const main = async () => {
 		console.log('Database is connected!!');
 
 		const schema = await buildSchema({
-			resolvers: [StoreResolver],
+			resolvers: [StoreResolver, ProductResolver],
 		});
 
 		const apolloServer = new ApolloServer({

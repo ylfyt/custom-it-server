@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
 import { ObjectId } from '@mikro-orm/mongodb';
 import { Field, ID, ObjectType } from 'type-graphql';
@@ -13,15 +12,15 @@ export class Store {
 	@SerializedPrimaryKey()
 	id!: string;
 
-	@Field(() => String)
+	@Field()
 	@Property({ type: String })
 	name!: string;
 
-	@Field(() => String)
+	@Field()
 	@Property({ unique: true })
 	username!: string;
 
-	@Field(() => String)
+	@Field()
 	@Property({ nullable: false })
 	address!: string;
 }
