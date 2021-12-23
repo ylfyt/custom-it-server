@@ -1,4 +1,3 @@
-import { query } from 'express';
 import { Arg, Ctx, FieldResolver, Query, Resolver, Root } from 'type-graphql';
 import { Product } from '../entities/Product';
 import { Store } from '../entities/Store';

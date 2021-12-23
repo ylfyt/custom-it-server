@@ -5,9 +5,8 @@ import { MikroORM } from '@mikro-orm/core';
 import { buildSchema } from 'type-graphql';
 
 import { StoreResolver } from './resolvers/store.resolver';
-import { Store } from './entities/Store';
-import { Product } from './entities/Product';
 import { ProductResolver } from './resolvers/product.resolver';
+import { dbConfig } from './constants';
 
 const main = async () => {
 	const app = express();
@@ -18,13 +17,7 @@ const main = async () => {
 		res.send('Hello ');
 	});
 
-	MikroORM.init({
-		entities: [Store, Product],
-		dbName: 'custom-it',
-		type: 'mongo',
-		clientUrl: process.env.DB_CONNECT,
-		debug: false,
-	}).then(async (orm) => {
+	MikroORM.init(dbConfig).then(async (orm) => {
 		console.log('Database is connected!!');
 
 		const schema = await buildSchema({
