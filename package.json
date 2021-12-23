@@ -13,6 +13,8 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@mikro-orm/core": "^4.5.9",
+		"@mikro-orm/mongodb": "^4.5.9",
 		"apollo-server-express": "^3.5.0",
 		"class-validator": "^0.13.2",
 		"dotenv": "^10.0.0",

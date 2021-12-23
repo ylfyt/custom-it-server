@@ -1,25 +1,25 @@
-import { Field, ID, ObjectType } from 'type-graphql';
-import { Entity, ObjectID, ObjectIdColumn, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
+import { ObjectId } from '@mikro-orm/mongodb';
+import { Field, ID } from 'type-graphql';
 
-@ObjectType()
 @Entity()
 export class Store {
-	@ObjectIdColumn({ name: 'id' })
-	_id!: string;
+	@PrimaryKey()
+	_id!: ObjectId;
 
 	@Field((type) => ID)
-	@ObjectIdColumn()
+	@SerializedPrimaryKey()
 	id!: string;
 
 	@Field()
-	@Column()
+	@Property({ type: String })
 	name!: string;
 
 	@Field()
-	@Column()
+	@Property({ unique: true })
 	username!: string;
 
 	@Field()
-	@Column()
+	@Property({ nullable: false })
 	address!: string;
 }

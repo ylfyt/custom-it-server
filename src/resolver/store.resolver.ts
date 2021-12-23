@@ -1,5 +1,4 @@
 import { Arg, FieldResolver, Query, Resolver } from 'type-graphql';
-import { getManager, getMongoRepository } from 'typeorm';
 import { Store } from '../entities/Store';
 
 @Resolver(Store)
@@ -12,12 +11,11 @@ export class StoreResolver {
 	//     }
 	//     return recipe;
 	//   }
-
-	@Query(() => [Store])
+	@Query(() => [Store], { nullable: true })
 	async stores() {
-		return await getMongoRepository(Store).find();
+		// return await getMongoRepository(Store).find();
+		return null;
 	}
-
 	// @Query(() => Store, { nullable: true })
 	// async store(@Arg('id') id: string) {
 	// 	console.log(id);

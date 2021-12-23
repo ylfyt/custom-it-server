@@ -1,25 +1,29 @@
-import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm';
+import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
+import { ObjectId } from '@mikro-orm/mongodb';
 
 @Entity()
 export class Product {
-	@ObjectIdColumn()
-	id!: ObjectID;
+	@PrimaryKey()
+	_id!: ObjectId;
 
-	@Column()
+	@SerializedPrimaryKey()
+	id!: string;
+
+	@Property()
 	name!: string;
 
-	@Column()
+	@Property()
 	description!: string;
 
-	@Column()
+	@Property()
 	price!: number;
 
-	@Column()
+	@Property()
 	stock!: number;
 
-	@Column()
+	@Property()
 	storeId!: string;
 
-	@Column()
+	@Property()
 	image!: string;
 }
