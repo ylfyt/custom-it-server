@@ -1,5 +1,6 @@
-import { Arg, FieldResolver, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, FieldResolver, Query, Resolver } from 'type-graphql';
 import { Store } from '../entities/Store';
+import { MyContext } from '../types';
 
 @Resolver(Store)
 export class StoreResolver {
@@ -11,10 +12,10 @@ export class StoreResolver {
 	//     }
 	//     return recipe;
 	//   }
-	@Query(() => [Store], { nullable: true })
-	async stores() {
+	@Query(() => [Store])
+	async stores(@Ctx() { em }: MyContext) {
 		// return await getMongoRepository(Store).find();
-		return null;
+		return await em.find(Store, {});
 	}
 	// @Query(() => Store, { nullable: true })
 	// async store(@Arg('id') id: string) {
