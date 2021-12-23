@@ -27,7 +27,6 @@ export class ProductResolver {
 		@Arg('price') price: number,
 		@Arg('stock') stock: number,
 		@Arg('storeId') storeId: string,
-		@Arg('image') image: string,
 		@Ctx() { em }: MyContext
 	) {
 		const newProduct = em.create(Product, {
@@ -36,10 +35,31 @@ export class ProductResolver {
 			price: price,
 			stock: stock,
 			storeId: storeId,
-			image: image,
+			image: '',
 		});
-
 		await em.persistAndFlush(newProduct);
 		return newProduct;
+	}
+
+	@Mutation(() => Product)
+	async updateProduct(
+		@Arg('id') id: string,
+		@Arg('name', () => String, { nullable: true }) name: string,
+		@Arg('description', () => String, { nullable: true }) description: string,
+		@Ctx() { em }: MyContext
+	) {
+		const product = await em.findOne(Product, { id: id });
+		if (!product) {
+			return null;
+		}
+
+		if (typeof name !== 'undefined') {
+			product.name = name;
+		}
+		if (typeof description !== 'undefined') {
+			product.description = description;
+		}
+		await em.persistAndFlush(product);
+		return product;
 	}
 }
