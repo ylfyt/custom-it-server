@@ -25,20 +25,21 @@ const main = async () => {
 	// 	schema: schema,
 	// });
 
-	const orm = await MikroORM.init({
+	MikroORM.init({
 		entities: [Store, Product],
 		dbName: 'custom-it',
 		type: 'mongo',
-		clientUrl: 'mongodb://localhost:27017',
+		clientUrl: process.env.DB_CONNECT,
 		debug: false,
-	});
+	}).then(async (orm) => {
+		console.log('Database is connected!!');
+		app.listen(PORT, () => {
+			console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
+		});
 
-	app.listen(PORT, () => {
-		console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
+		const str = await orm.em.find(Store, { id: '61c42c37e9b6d931c8b1ddf9' });
+		console.log(str);
 	});
-
-	const str = await orm.em.find(Store, { id: '61c42c37e9b6d931c8b1ddf9' });
-	console.log(str);
 };
 
 main();
