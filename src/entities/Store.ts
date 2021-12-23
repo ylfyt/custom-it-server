@@ -1,6 +1,8 @@
 import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
 import { ObjectId } from '@mikro-orm/mongodb';
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Ctx, Field, ID, ObjectType, Root } from 'type-graphql';
+import { MyContext } from '../types';
+import { Product } from './Product';
 
 @ObjectType()
 @Entity()
@@ -23,4 +25,9 @@ export class Store {
 	@Field()
 	@Property({ nullable: false })
 	address!: string;
+
+	@Field(() => [Product])
+	async products(@Ctx() { em }: MyContext, @Root() store: Store) {
+		return await em.find(Product, { storeId: store.id });
+	}
 }

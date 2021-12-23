@@ -15,11 +15,6 @@ export class ProductResolver {
 		return await em.findOne(Product, { id: id });
 	}
 
-	@FieldResolver(() => Store)
-	async store(@Root() product: Product, @Ctx() { em }: MyContext) {
-		return await em.findOne(Store, { id: product.storeId });
-	}
-
 	@Mutation(() => Product)
 	async createProduct(
 		@Arg('name') name: string,

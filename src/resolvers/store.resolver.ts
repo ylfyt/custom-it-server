@@ -43,9 +43,4 @@ export class StoreResolver {
 		await em.persistAndFlush(store);
 		return store;
 	}
-
-	@FieldResolver(() => [Product])
-	async products(@Ctx() { em }: MyContext, @Root() store: Store) {
-		return await em.find(Product, { storeId: store.id });
-	}
 }
