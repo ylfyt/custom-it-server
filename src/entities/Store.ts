@@ -1,15 +1,14 @@
-import { ObjectID } from 'mongodb';
 import { Field, ID, ObjectType } from 'type-graphql';
-import { Entity, ObjectID as ObjectIDType, ObjectIdColumn, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, ObjectID, ObjectIdColumn, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 @Entity()
 export class Store {
-	@ObjectIdColumn()
-	_id!: ObjectIDType;
+	@ObjectIdColumn({ name: 'id' })
+	_id!: string;
 
 	@Field((type) => ID)
-	@PrimaryColumn()
+	@ObjectIdColumn()
 	id!: string;
 
 	@Field()
