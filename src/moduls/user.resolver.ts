@@ -1,6 +1,6 @@
 import { Arg, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { User } from '../entities/User';
-import { MyContext } from '../types';
+import { IJwtData, MyContext } from '../types';
 import { RegisterInput } from './inputs/RegisterInput';
 import bcrypt from 'bcryptjs';
 import { LoginInput } from './inputs/LoginInput';
@@ -51,5 +51,21 @@ export class UserResolver {
 		});
 
 		return user;
+	}
+
+	@Mutation(() => User, { nullable: true })
+	async me(@Ctx() { req, em }: MyContext) {
+		if (!req.cookies['qid']) {
+			return null;
+		}
+
+		try {
+			const { id } = jwt.verify(req.cookies['qid'], process.env.JWT_SECRET!) as IJwtData;
+
+			const user = await em.findOne(User, { id });
+			return user;
+		} catch (error) {
+			return null;
+		}
 	}
 }

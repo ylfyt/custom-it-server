@@ -11,6 +11,10 @@ export interface ProductInterface {
 	image: string;
 }
 
+export interface IJwtData {
+	id: string;
+}
+
 export type MyContext = {
 	em: EntityManager<IDatabaseDriver<Connection>>;
 	req: Request;
