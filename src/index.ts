@@ -37,7 +37,7 @@ const main = async () => {
 		app.use(
 			cors({
 				credentials: true,
-				origin: 'https://www.graphqlbin.com',
+				origin: ['https://studio.apollographql.com'],
 			})
 		);
 
