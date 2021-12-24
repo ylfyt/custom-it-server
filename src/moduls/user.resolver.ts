@@ -68,4 +68,19 @@ export class UserResolver {
 			return null;
 		}
 	}
+
+	@Mutation(() => Boolean)
+	async logout(@Ctx() { em, req, res }: MyContext) {
+		if (req.cookies['qid']) {
+			res.cookie('qid', '', {
+				maxAge: 0,
+				secure: true,
+				httpOnly: true,
+				sameSite: 'none',
+			});
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
