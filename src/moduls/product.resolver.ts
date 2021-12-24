@@ -30,7 +30,7 @@ export class ProductResolver {
 			price: price,
 			stock: stock,
 			storeId: storeId,
-			image: '',
+			image: 'default.png',
 		});
 		await em.persistAndFlush(newProduct);
 		return newProduct;

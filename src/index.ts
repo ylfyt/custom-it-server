@@ -4,9 +4,10 @@ import { ApolloServer } from 'apollo-server-express';
 import { MikroORM } from '@mikro-orm/core';
 import { buildSchema } from 'type-graphql';
 
-import { StoreResolver } from './resolvers/store.resolver';
-import { ProductResolver } from './resolvers/product.resolver';
+import { StoreResolver } from './moduls/store.resolver';
+import { ProductResolver } from './moduls/product.resolver';
 import { dbConfig } from './constants';
+import { UserResolver } from './moduls/user.resolver';
 
 const main = async () => {
 	const app = express();
@@ -21,7 +22,7 @@ const main = async () => {
 		console.log('Database is connected!!');
 
 		const schema = await buildSchema({
-			resolvers: [StoreResolver, ProductResolver],
+			resolvers: [StoreResolver, ProductResolver, UserResolver],
 		});
 
 		const apolloServer = new ApolloServer({
