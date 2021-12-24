@@ -4,7 +4,7 @@ import { Ctx, Field, ID, ObjectType, Root } from 'type-graphql';
 
 @ObjectType()
 @Entity()
-export class Store {
+export class Comment {
 	@PrimaryKey()
 	_id!: ObjectId;
 

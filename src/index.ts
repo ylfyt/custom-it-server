@@ -10,6 +10,8 @@ import { dbConfig } from './constants';
 import { UserResolver } from './moduls/user.resolver';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import { CommentResolver } from './moduls/comment.resolver';
+import { dirname } from 'path/posix';
 
 const main = async () => {
 	const app = express();
@@ -24,7 +26,7 @@ const main = async () => {
 		console.log('Database is connected!!');
 
 		const schema = await buildSchema({
-			resolvers: [StoreResolver, ProductResolver, UserResolver],
+			resolvers: [StoreResolver, ProductResolver, UserResolver, CommentResolver],
 		});
 
 		const apolloServer = new ApolloServer({
