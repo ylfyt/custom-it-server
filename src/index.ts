@@ -8,6 +8,8 @@ import { StoreResolver } from './moduls/store.resolver';
 import { ProductResolver } from './moduls/product.resolver';
 import { dbConfig } from './constants';
 import { UserResolver } from './moduls/user.resolver';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 const main = async () => {
 	const app = express();
@@ -27,11 +29,20 @@ const main = async () => {
 
 		const apolloServer = new ApolloServer({
 			schema: schema,
-			context: (req: Request, res: Response) => ({ em: orm.em, req: req, res: res }),
+			context: ({ req, res }) => ({ em: orm.em, req: req, res: res }),
 		});
 		await apolloServer.start();
 
-		apolloServer.applyMiddleware({ app });
+		app.use(
+			cors({
+				credentials: true,
+				origin: 'https://studio.apollographql.com',
+			})
+		);
+
+		app.use(cookieParser());
+
+		apolloServer.applyMiddleware({ app, cors: false });
 
 		app.listen(PORT, () => {
 			console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);

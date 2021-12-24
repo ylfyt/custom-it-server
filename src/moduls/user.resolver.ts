@@ -44,7 +44,11 @@ export class UserResolver {
 		}
 
 		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!);
-		// res.cookie('qid', token);
+		res.cookie('qid', token, {
+			secure: true,
+			httpOnly: true,
+			sameSite: 'none',
+		});
 
 		return user;
 	}
