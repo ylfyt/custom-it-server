@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server-express';
 import { MikroORM } from '@mikro-orm/core';
@@ -27,10 +27,16 @@ const main = async () => {
 
 		const apolloServer = new ApolloServer({
 			schema: schema,
-			context: () => ({ em: orm.em }),
+			context: (req: Request, res: Response) => ({ em: orm.em, req: req, res: res }),
 		});
 		await apolloServer.start();
-		apolloServer.applyMiddleware({ app });
+
+		const cors = {
+			credentials: true,
+			origin: 'https://studio.apollographql.com',
+		};
+
+		apolloServer.applyMiddleware({ app, cors });
 
 		app.listen(PORT, () => {
 			console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);

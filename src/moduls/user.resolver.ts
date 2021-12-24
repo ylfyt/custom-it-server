@@ -3,6 +3,8 @@ import { User } from '../entities/User';
 import { MyContext } from '../types';
 import { RegisterInput } from './inputs/RegisterInput';
 import bcrypt from 'bcryptjs';
+import { LoginInput } from './inputs/LoginInput';
+import jwt from 'jsonwebtoken';
 
 @Resolver(User)
 export class UserResolver {
@@ -23,5 +25,27 @@ export class UserResolver {
 		await em.persistAndFlush(newUser);
 
 		return newUser;
+	}
+
+	@Mutation(() => User, { nullable: true })
+	async login(@Arg('data') { username, password }: LoginInput, @Ctx() { em, res }: MyContext) {
+		const user = await em.findOne(User, { username });
+
+		if (!user) {
+			return null;
+		}
+
+		if (user.username !== username) {
+			return null;
+		}
+
+		if (!bcrypt.compareSync(password, user.password)) {
+			return null;
+		}
+
+		const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET!);
+		// res.cookie('qid', token);
+
+		return user;
 	}
 }
