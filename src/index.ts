@@ -31,12 +31,7 @@ const main = async () => {
 		});
 		await apolloServer.start();
 
-		const cors = {
-			credentials: true,
-			origin: 'https://studio.apollographql.com',
-		};
-
-		apolloServer.applyMiddleware({ app, cors });
+		apolloServer.applyMiddleware({ app });
 
 		app.listen(PORT, () => {
 			console.log(`Server is listening on port ${PORT} | http://localhost:${PORT}`);
