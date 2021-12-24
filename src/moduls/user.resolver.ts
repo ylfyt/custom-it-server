@@ -2,6 +2,7 @@ import { Arg, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-g
 import { User } from '../entities/User';
 import { MyContext } from '../types';
 import { RegisterInput } from './inputs/RegisterInput';
+import bcrypt from 'bcryptjs';
 
 @Resolver(User)
 export class UserResolver {
@@ -11,10 +12,12 @@ export class UserResolver {
 		if (userExist) {
 			return null;
 		}
+		const salt = bcrypt.genSaltSync(10);
+		const hashPassword = bcrypt.hashSync(password, salt);
 
 		const newUser = em.create(User, {
 			username,
-			password,
+			password: hashPassword,
 		});
 
 		await em.persistAndFlush(newUser);
