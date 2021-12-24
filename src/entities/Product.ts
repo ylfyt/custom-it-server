@@ -2,6 +2,7 @@ import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/c
 import { ObjectId } from '@mikro-orm/mongodb';
 import { Ctx, Field, ID, ObjectType, Root } from 'type-graphql';
 import { MyContext } from '../types';
+import { Comment } from './Comment';
 import { Store } from './Store';
 
 @ObjectType()
@@ -40,5 +41,10 @@ export class Product {
 	@Field(() => Store)
 	async store(@Root() product: Product, @Ctx() { em }: MyContext) {
 		return await em.findOne(Store, { id: product.storeId });
+	}
+
+	@Field(() => [Comment])
+	async comments(@Root() product: Product, @Ctx() { em }: MyContext) {
+		return await em.find(Comment, { productId: product.id });
 	}
 }

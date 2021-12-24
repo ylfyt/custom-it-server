@@ -23,4 +23,8 @@ export class Comment {
 	@Field()
 	@Property()
 	text!: string;
+
+	@Field()
+	@Property()
+	createAt!: string;
 }

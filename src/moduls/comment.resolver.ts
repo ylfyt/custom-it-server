@@ -7,7 +7,6 @@ import { CreateCommentInput } from './inputs/CreateCommentInput';
 export class CommentResolver {
 	@Query(() => [Comment])
 	async comments(@Ctx() { em }: MyContext) {
-		console.log(__dirname);
 		return await em.find(Comment, {});
 	}
 
@@ -21,6 +20,7 @@ export class CommentResolver {
 		const newComment = em.create(Comment, {
 			productId,
 			userId,
+			createAt: new Date(),
 			text,
 		});
 		await em.persistAndFlush(newComment);
