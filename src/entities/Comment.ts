@@ -1,6 +1,6 @@
 import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
 import { ObjectId } from '@mikro-orm/mongodb';
-import { Ctx, Field, ID, ObjectType, Root } from 'type-graphql';
+import { Field, ID, ObjectType } from 'type-graphql';
 
 @ObjectType()
 @Entity()

@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server-express';
 import { MikroORM } from '@mikro-orm/core';
@@ -11,7 +11,6 @@ import { UserResolver } from './moduls/user.resolver';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { CommentResolver } from './moduls/comment.resolver';
-import { dirname } from 'path/posix';
 
 const main = async () => {
 	const app = express();

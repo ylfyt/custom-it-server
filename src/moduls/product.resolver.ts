@@ -1,6 +1,5 @@
-import { Arg, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Product } from '../entities/Product';
-import { Store } from '../entities/Store';
 import { MyContext } from '../types';
 
 @Resolver(Product)

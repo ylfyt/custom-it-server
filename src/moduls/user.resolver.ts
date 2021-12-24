@@ -1,4 +1,4 @@
-import { Arg, Ctx, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
+import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
 import { User } from '../entities/User';
 import { IJwtData, MyContext } from '../types';
 import { RegisterInput } from './inputs/RegisterInput';

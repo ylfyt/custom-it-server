@@ -10,7 +10,7 @@ export class Store {
 	@PrimaryKey()
 	_id!: ObjectId;
 
-	@Field((type) => String)
+	@Field((type) => ID)
 	@SerializedPrimaryKey()
 	id!: string;
 
