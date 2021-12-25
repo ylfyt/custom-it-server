@@ -1,6 +1,6 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Product } from '../../entities/Product';
-import { MyContext } from '../../types';
+import { MyContext } from '../../utils/types';
 import { CreateProductInput } from './CreateProductInput';
 import { UpdateProductInput } from './UpdateProductInput';
 

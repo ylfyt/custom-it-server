@@ -1,6 +1,6 @@
 import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { Comment } from '../../entities/Comment';
-import { MyContext } from '../../types';
+import { MyContext } from '../../utils/types';
 import { isAuth } from '../user/isAuth';
 import { CreateCommentInput } from './CreateCommentInput';
 

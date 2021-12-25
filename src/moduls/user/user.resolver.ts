@@ -1,6 +1,6 @@
 import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
 import { User } from '../../entities/User';
-import { IJwtData, MyContext } from '../../types';
+import { IJwtData, MyContext } from '../../utils/types';
 import { RegisterInput } from './RegisterInput';
 import bcrypt from 'bcryptjs';
 import { LoginInput } from './LoginInput';

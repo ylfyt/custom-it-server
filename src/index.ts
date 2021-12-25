@@ -6,7 +6,7 @@ import { buildSchema } from 'type-graphql';
 
 import { StoreResolver } from './moduls/store/store.resolver';
 import { ProductResolver } from './moduls/product/product.resolver';
-import { dbConfig } from './constants';
+import { dbConfig } from './entities/constants';
 import { UserResolver } from './moduls/user/user.resolver';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';

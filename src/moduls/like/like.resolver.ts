@@ -1,6 +1,6 @@
 import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
 import { Like } from '../../entities/Like';
-import { MyContext } from '../../types';
+import { MyContext } from '../../utils/types';
 import { CreateLikeInput } from './CreateLikeInput';
 import { isAuth } from '../user/isAuth';
 

@@ -1,7 +1,7 @@
 import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
 import { ObjectId } from '@mikro-orm/mongodb';
 import { Ctx, Field, ID, ObjectType, Root } from 'type-graphql';
-import { MyContext } from '../types';
+import { MyContext } from '../utils/types';
 import { Comment } from './Comment';
 import { Like } from './Like';
 import { Store } from './Store';
