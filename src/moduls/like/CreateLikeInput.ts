@@ -5,7 +5,4 @@ import { InputType, Field } from 'type-graphql';
 export class CreateLikeInput {
 	@Field()
 	productId!: string;
-
-	@Field()
-	userId!: string;
 }
