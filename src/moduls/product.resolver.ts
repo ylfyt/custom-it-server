@@ -1,6 +1,8 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { Product } from '../entities/Product';
 import { MyContext } from '../types';
+import { CreateProductInput } from './inputs/CreateProductInput';
+import { UpdateProductInput } from './inputs/UpdateProductInput';
 
 @Resolver(Product)
 export class ProductResolver {
@@ -15,14 +17,7 @@ export class ProductResolver {
 	}
 
 	@Mutation(() => Product)
-	async createProduct(
-		@Arg('name') name: string,
-		@Arg('description') description: string,
-		@Arg('price') price: number,
-		@Arg('stock') stock: number,
-		@Arg('storeId') storeId: string,
-		@Ctx() { em }: MyContext
-	) {
+	async createProduct(@Arg('data') { name, description, price, stock, storeId }: CreateProductInput, @Ctx() { em }: MyContext) {
 		const newProduct = em.create(Product, {
 			name: name,
 			description: description,
@@ -36,12 +31,7 @@ export class ProductResolver {
 	}
 
 	@Mutation(() => Product)
-	async updateProduct(
-		@Arg('id') id: string,
-		@Arg('name', () => String, { nullable: true }) name: string,
-		@Arg('description', () => String, { nullable: true }) description: string,
-		@Ctx() { em }: MyContext
-	) {
+	async updateProduct(@Arg('id') id: string, @Arg('data') { name, description }: UpdateProductInput, @Ctx() { em }: MyContext) {
 		const product = await em.findOne(Product, { id: id });
 		if (!product) {
 			return null;
