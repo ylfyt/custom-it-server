@@ -1,6 +1,7 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { Comment } from '../../entities/Comment';
 import { MyContext } from '../../types';
+import { isAuth } from '../user/isAuth';
 import { CreateCommentInput } from './CreateCommentInput';
 
 @Resolver(Comment)
@@ -16,7 +17,9 @@ export class CommentResolver {
 	}
 
 	@Mutation(() => Comment, { nullable: true })
-	async createComment(@Arg('data') { productId, userId, text }: CreateCommentInput, @Ctx() { em }: MyContext) {
+	@UseMiddleware(isAuth)
+	async createComment(@Arg('data') { productId, text }: CreateCommentInput, @Ctx() { em, req }: MyContext) {
+		const userId = req.userId;
 		const newComment = em.create(Comment, {
 			productId,
 			userId,
