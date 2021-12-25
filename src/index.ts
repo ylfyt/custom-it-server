@@ -11,6 +11,7 @@ import { UserResolver } from './moduls/user.resolver';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { CommentResolver } from './moduls/comment.resolver';
+import { LikeResolver } from './moduls/like.resolver';
 
 const main = async () => {
 	const app = express();
@@ -25,7 +26,7 @@ const main = async () => {
 		console.log('Database is connected!!');
 
 		const schema = await buildSchema({
-			resolvers: [StoreResolver, ProductResolver, UserResolver, CommentResolver],
+			resolvers: [StoreResolver, ProductResolver, UserResolver, CommentResolver, LikeResolver],
 		});
 
 		const apolloServer = new ApolloServer({
