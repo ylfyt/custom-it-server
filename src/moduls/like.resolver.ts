@@ -7,6 +7,12 @@ import { CreateLikeInput } from './inputs/CreateLikeInput';
 export class LikeResolver {
 	@Mutation(() => Like, { nullable: true })
 	async createLike(@Arg('data') { productId, userId }: CreateLikeInput, @Ctx() { em }: MyContext) {
+		const like = await em.findOne(Like, { userId: userId, productId: productId });
+
+		if (like) {
+			return null;
+		}
+
 		const newLike = em.create(Like, {
 			productId,
 			userId,
