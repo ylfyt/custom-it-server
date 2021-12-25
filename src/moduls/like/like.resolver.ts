@@ -1,7 +1,7 @@
 import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
-import { Like } from '../entities/Like';
-import { MyContext } from '../types';
-import { CreateLikeInput } from './inputs/CreateLikeInput';
+import { Like } from '../../entities/Like';
+import { MyContext } from '../../types';
+import { CreateLikeInput } from './CreateLikeInput';
 
 @Resolver(Like)
 export class LikeResolver {

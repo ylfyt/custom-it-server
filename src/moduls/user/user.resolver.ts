@@ -1,9 +1,9 @@
 import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
-import { User } from '../entities/User';
-import { IJwtData, MyContext } from '../types';
-import { RegisterInput } from './inputs/RegisterInput';
+import { User } from '../../entities/User';
+import { IJwtData, MyContext } from '../../types';
+import { RegisterInput } from './RegisterInput';
 import bcrypt from 'bcryptjs';
-import { LoginInput } from './inputs/LoginInput';
+import { LoginInput } from './LoginInput';
 import jwt from 'jsonwebtoken';
 
 @Resolver(User)

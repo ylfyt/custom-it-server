@@ -1,7 +1,7 @@
 import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
-import { Comment } from '../entities/Comment';
-import { MyContext } from '../types';
-import { CreateCommentInput } from './inputs/CreateCommentInput';
+import { Comment } from '../../entities/Comment';
+import { MyContext } from '../../types';
+import { CreateCommentInput } from './CreateCommentInput';
 
 @Resolver(Comment)
 export class CommentResolver {

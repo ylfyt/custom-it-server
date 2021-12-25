@@ -4,14 +4,14 @@ import { ApolloServer } from 'apollo-server-express';
 import { MikroORM } from '@mikro-orm/core';
 import { buildSchema } from 'type-graphql';
 
-import { StoreResolver } from './moduls/store.resolver';
-import { ProductResolver } from './moduls/product.resolver';
+import { StoreResolver } from './moduls/store/store.resolver';
+import { ProductResolver } from './moduls/product/product.resolver';
 import { dbConfig } from './constants';
-import { UserResolver } from './moduls/user.resolver';
+import { UserResolver } from './moduls/user/user.resolver';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { CommentResolver } from './moduls/comment.resolver';
-import { LikeResolver } from './moduls/like.resolver';
+import { CommentResolver } from './moduls/comment/comment.resolver';
+import { LikeResolver } from './moduls/like/like.resolver';
 
 const main = async () => {
 	const app = express();
