@@ -14,7 +14,4 @@ export class CreateProductInput {
 
 	@Field()
 	stock!: number;
-
-	@Field()
-	storeId!: string;
 }

@@ -1,6 +1,8 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { Product } from '../../entities/Product';
+import { Store } from '../../entities/Store';
 import { MyContext } from '../../utils/types';
+import { isAuth } from '../user/isAuth';
 import { CreateProductInput } from './CreateProductInput';
 import { UpdateProductInput } from './UpdateProductInput';
 
@@ -16,14 +18,22 @@ export class ProductResolver {
 		return await em.findOne(Product, { id: id });
 	}
 
-	@Mutation(() => Product)
-	async createProduct(@Arg('data') { name, description, price, stock, storeId }: CreateProductInput, @Ctx() { em }: MyContext) {
+	@Mutation(() => Product, { nullable: true })
+	@UseMiddleware(isAuth)
+	async createProduct(@Arg('data') { name, description, price, stock }: CreateProductInput, @Ctx() { em, req }: MyContext) {
+		const str = await em.findOne(Store, { username: req.user?.username });
+
+		if (!str) {
+			// TODO: Throw Error
+			return null;
+		}
+
 		const newProduct = em.create(Product, {
 			name: name,
 			description: description,
 			price: price,
 			stock: stock,
-			storeId: storeId,
+			storeId: str.id,
 			image: 'default.png',
 		});
 		await em.persistAndFlush(newProduct);
