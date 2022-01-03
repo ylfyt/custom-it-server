@@ -1,5 +1,10 @@
+interface userData {
+	id: string;
+	username: string;
+}
+
 declare namespace Express {
 	export interface Request {
-		userId?: string | null;
+		user?: userData | null;
 	}
 }

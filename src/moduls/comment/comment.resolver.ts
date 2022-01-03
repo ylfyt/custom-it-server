@@ -19,7 +19,7 @@ export class CommentResolver {
 	@Mutation(() => Comment, { nullable: true })
 	@UseMiddleware(isAuth)
 	async createComment(@Arg('data') { productId, text }: CreateCommentInput, @Ctx() { em, req }: MyContext) {
-		const userId = req.userId;
+		const userId = req.user?.id;
 		const newComment = em.create(Comment, {
 			productId,
 			userId,

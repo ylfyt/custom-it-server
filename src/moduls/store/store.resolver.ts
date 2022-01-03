@@ -1,6 +1,7 @@
-import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from 'type-graphql';
 import { Store } from '../../entities/Store';
 import { MyContext } from '../../utils/types';
+import { isAuth } from '../user/isAuth';
 import { CreateStoreInput } from './CreateStoreInput';
 import { UpdateStoreInput } from './UpdateStoreInput';
 
@@ -16,13 +17,14 @@ export class StoreResolver {
 	}
 
 	@Mutation(() => Store, { nullable: true })
-	async createStore(@Arg('data') { name, username, address }: CreateStoreInput, @Ctx() { em }: MyContext) {
-		const str = await em.findOne(Store, { username: username });
+	@UseMiddleware(isAuth)
+	async createStore(@Arg('data') { name, address }: CreateStoreInput, @Ctx() { em, req }: MyContext) {
+		const str = await em.findOne(Store, { username: req.user?.username });
 		if (str) {
 			return null;
 		}
 
-		const newStore = em.create(Store, { name: name, username: username, address: address });
+		const newStore = em.create(Store, { name: name, username: req.user?.username, address: address });
 		await em.persistAndFlush(newStore);
 
 		return newStore;

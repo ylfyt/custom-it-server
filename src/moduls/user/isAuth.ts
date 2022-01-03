@@ -13,17 +13,17 @@ export const isAuth: MiddlewareFn<MyContext> = async ({ context }, next) => {
 			const user = await context.em.findOne(User, { id });
 
 			if (!user) {
-				context.req.userId = null;
+				context.req.user = null;
 				throw new Error('Not Authenticated');
 			} else {
-				context.req.userId = user.id;
+				context.req.user = { id: user.id, username: user.username };
 			}
 		} catch (error) {
-			context.req.userId = null;
+			context.req.user = null;
 			throw new Error('Not Authenticated');
 		}
 	} else {
-		context.req.userId = null;
+		context.req.user = null;
 		throw new Error('Not Authenticated');
 	}
 

@@ -9,7 +9,7 @@ export class LikeResolver {
 	@Mutation(() => Like, { nullable: true })
 	@UseMiddleware(isAuth)
 	async createLike(@Arg('data') { productId }: CreateLikeInput, @Ctx() { em, req }: MyContext) {
-		const userId = req.userId;
+		const userId = req.user?.id;
 
 		const like = await em.findOne(Like, { userId: userId, productId: productId });
 
