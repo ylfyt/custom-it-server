@@ -1,6 +1,8 @@
 import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
 import { ObjectId } from '@mikro-orm/mongodb';
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Ctx, Field, ID, ObjectType, Root } from 'type-graphql';
+import { MyContext } from '../utils/types';
+import { User } from './User';
 
 @ObjectType()
 @Entity()
@@ -27,4 +29,9 @@ export class Comment {
 	@Field()
 	@Property()
 	createAt!: string;
+
+	@Field(() => User)
+	async user(@Root() comment: Comment, @Ctx() { em }: MyContext) {
+		return await em.findOne(User, { id: comment.userId });
+	}
 }
