@@ -32,6 +32,7 @@ export class Product {
 	@Property()
 	stock!: number;
 
+	@Field()
 	@Property()
 	storeId!: string;
 
