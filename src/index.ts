@@ -23,7 +23,8 @@ const main = async () => {
 	});
 
 	MikroORM.init(dbConfig).then(async (orm) => {
-		console.log('Database is connected!!');
+		const msg = 'Database is connected in ' + ((process.env.MODE === 'DEV' ? 'DEVELOPMENT' : 'PRODUCTION') + ' mode!!!');
+		console.log(msg);
 
 		const schema = await buildSchema({
 			resolvers: [StoreResolver, ProductResolver, UserResolver, CommentResolver, LikeResolver],
