@@ -6,12 +6,12 @@ import { buildSchema } from 'type-graphql';
 
 import { StoreResolver } from './moduls/store/store.resolver';
 import { ProductResolver } from './moduls/product/product.resolver';
-import { dbConfig } from './entities/constants';
 import { UserResolver } from './moduls/user/user.resolver';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { CommentResolver } from './moduls/comment/comment.resolver';
 import { LikeResolver } from './moduls/like/like.resolver';
+import { dbConfig } from './utils/dbConfig';
 
 const main = async () => {
 	const app = express();
