@@ -31,6 +31,7 @@ export class StoreResolver {
 	}
 
 	@Mutation(() => Store, { nullable: true })
+	@UseMiddleware(isAuth)
 	async updateStore(@Arg('id') id: string, @Arg('data') { name, address }: UpdateStoreInput, @Ctx() { em }: MyContext) {
 		const store = await em.findOne(Store, { id: id });
 		if (!store) {

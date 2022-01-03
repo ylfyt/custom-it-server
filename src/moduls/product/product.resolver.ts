@@ -41,6 +41,7 @@ export class ProductResolver {
 	}
 
 	@Mutation(() => Product)
+	@UseMiddleware(isAuth)
 	async updateProduct(@Arg('id') id: string, @Arg('data') { name, description }: UpdateProductInput, @Ctx() { em }: MyContext) {
 		const product = await em.findOne(Product, { id: id });
 		if (!product) {
