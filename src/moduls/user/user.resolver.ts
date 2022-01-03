@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
+import { Arg, Ctx, Mutation, Query, Resolver } from 'type-graphql';
 import { User } from '../../entities/User';
 import { IJwtData, MyContext } from '../../utils/types';
 import { RegisterInput } from './RegisterInput';
@@ -53,7 +53,7 @@ export class UserResolver {
 		return user;
 	}
 
-	@Mutation(() => User, { nullable: true })
+	@Query(() => User, { nullable: true })
 	async me(@Ctx() { req, em }: MyContext) {
 		if (!req.cookies['qid']) {
 			return null;
