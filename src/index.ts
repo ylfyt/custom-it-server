@@ -35,6 +35,7 @@ const main = async () => {
 		});
 		await apolloServer.start();
 
+		app.use(express.static('public'));
 		app.use(
 			cors({
 				credentials: true,

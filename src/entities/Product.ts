@@ -1,6 +1,7 @@
 import { Entity, PrimaryKey, SerializedPrimaryKey, Property } from '@mikro-orm/core';
 import { ObjectId } from '@mikro-orm/mongodb';
 import { Ctx, Field, ID, ObjectType, Root } from 'type-graphql';
+import { BASE_URL } from '../utils/constants';
 import { MyContext } from '../utils/types';
 import { Comment } from './Comment';
 import { Like } from './Like';
@@ -36,7 +37,6 @@ export class Product {
 	@Property()
 	storeId!: string;
 
-	@Field()
 	@Property()
 	image!: string;
 
@@ -54,5 +54,11 @@ export class Product {
 	async likes(@Root() product: Product, @Ctx() { em }: MyContext) {
 		const likes = await em.find(Like, { productId: product.id });
 		return likes.length;
+	}
+
+	@Field(() => String)
+	async imageUrl(@Root() product: Product) {
+		const url = BASE_URL + '/img/' + product.image;
+		return url;
 	}
 }
