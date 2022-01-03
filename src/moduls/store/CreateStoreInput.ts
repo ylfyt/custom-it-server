@@ -7,8 +7,5 @@ export class CreateStoreInput {
 	name!: string;
 
 	@Field()
-	username!: string;
-
-	@Field()
 	address!: string;
 }
