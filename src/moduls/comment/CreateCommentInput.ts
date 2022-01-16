@@ -7,6 +7,6 @@ export class CreateCommentInput {
 	productId!: string;
 
 	@Field()
-	@Length(3)
+	@Length(2)
 	text!: string;
 }
