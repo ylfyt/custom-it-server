@@ -37,6 +37,10 @@ export class Product {
 	@Property()
 	storeId!: string;
 
+	@Field(() => String, { nullable: true })
+	@Property()
+	slug!: string;
+
 	@Property()
 	image!: string;
 

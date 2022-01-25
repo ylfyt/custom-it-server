@@ -5,6 +5,7 @@ import { MyContext } from '../../utils/types';
 import { isAuth } from '../user/isAuth';
 import { CreateProductInput } from './CreateProductInput';
 import { UpdateProductInput } from './UpdateProductInput';
+import ctSlug from '../../utils/convertToSlug';
 
 @Resolver(Product)
 export class ProductResolver {
@@ -28,6 +29,9 @@ export class ProductResolver {
 			return null;
 		}
 
+		let slugName = ctSlug(name);
+		slugName = `${slugName}-${str.id}`;
+
 		const newProduct = em.create(Product, {
 			name: name,
 			description: description,
@@ -35,6 +39,7 @@ export class ProductResolver {
 			stock: stock,
 			storeId: str.id,
 			image: 'default.png',
+			slug: slugName,
 		});
 		await em.persistAndFlush(newProduct);
 		return newProduct;
