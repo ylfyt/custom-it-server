@@ -14,9 +14,14 @@ export class ProductResolver {
 		return await em.find(Product, {});
 	}
 
-	@Query(() => Product)
+	@Query(() => Product, { nullable: true })
 	async product(@Ctx() { em }: MyContext, @Arg('id') id: string) {
 		return await em.findOne(Product, { id: id });
+	}
+
+	@Query(() => Product, { nullable: true })
+	async productBySlug(@Ctx() { em }: MyContext, @Arg('slug') slug: string) {
+		return await em.findOne(Product, { slug: slug });
 	}
 
 	@Mutation(() => Product, { nullable: true })
