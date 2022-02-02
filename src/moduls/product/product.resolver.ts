@@ -32,6 +32,11 @@ export class ProductResolver {
 		let slugName = ctSlug(name);
 		slugName = `${slugName}-${str.id}`;
 
+		const productExist = await em.findOne(Product, { slug: slugName });
+		if (productExist) {
+			return null;
+		}
+
 		const newProduct = em.create(Product, {
 			name: name,
 			description: description,
