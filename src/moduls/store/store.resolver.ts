@@ -12,8 +12,16 @@ export class StoreResolver {
 		return await em.find(Store, {});
 	}
 	@Query(() => Store, { nullable: true })
-	async store(@Ctx() { em }: MyContext, @Arg('id') id: string) {
-		return await em.findOne(Store, { id: id });
+	async store(@Ctx() { em }: MyContext, @Arg('id', { nullable: true }) id: string, @Arg('username', { nullable: true }) username: string) {
+		if (id) {
+			return await em.findOne(Store, { id: id });
+		}
+
+		if (username) {
+			return await em.findOne(Store, { username: username });
+		}
+
+		return null;
 	}
 
 	@Mutation(() => Store, { nullable: true })
